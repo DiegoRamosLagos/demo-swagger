@@ -35,14 +35,12 @@ public class EmployeeController {
 
     @Tag(name = "get", description = "GET methods of Employee APIs")
     @GetMapping("/employees")
-    @PreAuthorize("hasAnyAuthority('ROLE_BOSS', 'ROLE_MGR', 'ROLE_EMPLOYEE')")
     public List<EmployeeDTO> findAllEmployees() {
         return employeeService.findAll();
     }
 
     @Tag(name = "get", description = "Retrieve one employee")
     @GetMapping("/employees/{employeeId}")
-    @PreAuthorize("hasAnyAuthority('ROLE_BOSS', 'ROLE_MGR', 'ROLE_EMPLOYEE')")
     public EmployeeDTO getEmployee(
             @Parameter(description = "ID of employee to be retrieved", required = true) @PathVariable int employeeId) {
 
@@ -50,14 +48,12 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    @PreAuthorize("hasAnyAuthority('ROLE_BOSS', 'ROLE_MGR')")
     public EmployeeDTO addEmployee(@RequestBody NewEmployeeDTO employee) {
         return employeeService.save(employee);
     }
 
     @Operation(summary = "Update an employee", description = "Update an existing employee. The response is updated Employee object with id, first name, and last name.")
     @PutMapping("/employees")
-    @PreAuthorize("hasAnyAuthority('ROLE_BOSS', 'ROLE_MGR')")
     public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employee) {
         return employeeService.update(employee);
     }
@@ -67,7 +63,6 @@ public class EmployeeController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Employee.class)) }),
             @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content) })
     @DeleteMapping("/employees/{employeeId}")
-    @PreAuthorize("hasAnyAuthority('ROLE_BOSS')")
     public String deleteEmployee(@PathVariable int employeeId) {
         employeeService.deleteById(employeeId);
         return "Deleted employee with id: " + employeeId;
