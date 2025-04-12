@@ -14,9 +14,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -24,6 +25,8 @@ import lombok.Setter;
 @Builder
 @Table(name = "users")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +34,6 @@ public class User implements UserDetails {
     private Integer id;
     @Column(nullable = false)
     private String fullName;
-    @Email
     @Column(unique = true, length = 100, nullable = false)
     private String email;
     @Column(nullable = false)
